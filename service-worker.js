@@ -22,8 +22,10 @@ self.addEventListener('activate', event => {
         cacheNames.filter(name => name !== CACHE_NAME)
           .map(name => caches.delete(name))
       );
-    }).then(() => self.clients.claim())
+    })
   );
+
+  self.clients.claim(); 
 });
 
 self.addEventListener('fetch', event => {
@@ -52,28 +54,4 @@ self.addEventListener('fetch', event => {
   }
 });
 
-let wakeLock = null;
 
-async function requestWakeLock() {
-  try {
-    if ('wakeLock' in navigator) {
-      wakeLock = await navigator.wakeLock.request('screen');
-      wakeLock.addEventListener('release', () => {
-        console.log('Screen Wake Lock released');
-      });
-      console.log('Screen Wake Lock acquired');
-    }
-  } catch (err) {
-    console.error(`${err.name}, ${err.message}`);
-  }
-}
-
-// Re-acquire wake lock on visibility change (e.g., after tab switch)
-document.addEventListener('visibilitychange', () => {
-  if (wakeLock !== null && document.visibilityState === 'visible') {
-    requestWakeLock();
-  }
-});
-
-// Request wake lock on page load
-window.addEventListener('load', requestWakeLock);
