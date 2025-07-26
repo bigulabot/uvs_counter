@@ -20,6 +20,11 @@
   <img src="icons/settings.svg" alt="Settings" style="width:1.3em;height:1.3em;filter: grayscale(1) contrast(2) brightness(1.2);" />
 </button>
 
+<button id="historyBtn" class="icon-button" style="position: absolute; top: 3.3em; left: 0.1em; z-index: 20;">
+  <img src="icons/history.svg" alt="History" style="width:1.3em;height:1.3em;filter: grayscale(1) contrast(2) brightness(1.2);" />
+</button>
+
+
     <!-- LEFT: COUNTERS -->
     <div class="counters-container">
 
@@ -111,7 +116,7 @@
 
   <div id="landingPage" class="landing-page">
   <div class="landing-content">
-    <button id="closeLandingPage" class="close-btn" aria-label="Close">&times;</button>
+  <button id="closeLandingPage" class="popup-close" aria-label="Close">✕</button>
     
     <div class="welcome-message">
     Welcome to <b>UVS Counter</b>!
@@ -128,18 +133,27 @@
     </div>
 
     <div class="landing-list">
+
       <div class="landing-row">
         <img src="icons/home-screen.svg" class="landing-icon" alt="Add to Home Screen" />
         <span>Click on the <img src="icons/share.svg" alt="Share" style="vertical-align:center; width:1em; height:1em; margin:0;"> button and <b>Add to Home Screen</b> for the best experience.</span>
       </div>
+
       <div class="landing-row">
         <img src="icons/rotate-device.svg" class="landing-icon" alt="Phone Portrait/Landscape" />
         <span>This app works both in portrait and landscape mode.</span>
       </div>
+      
       <div class="landing-row">
         <img src="icons/intro_settings.svg" class="landing-icon" alt="Settings" />
         <span>You can adjust starting life, speed, zone and damage in the settings menu.</span>
       </div>
+      
+      <div class="landing-row">
+        <img src="icons/history.svg" class="landing-icon" alt="Settings" />
+        <span>View all damage dealt. The log clears when you start a new game.</span>
+      </div>
+     
       <div class="landing-row">
         <img src="icons/intro-reset.svg" class="landing-icon" alt="Reset" />
         <span>
@@ -148,10 +162,12 @@
           <b>hold</b> to reset speed, zone, damage &amp; life / new game.
         </span>
       </div>
+      
       <div class="landing-row">
         <img src="icons/intro_dmg1.svg" class="landing-icon" alt="Full Damage" />
         <span><b>tap</b> to deal full damage.</span>
       </div>
+      
       <div class="landing-row">
         <img src="icons/intro_dmg2.svg" class="landing-icon" alt="Half Damage" />
         <span><b>tap</b> to deal half damage / half block.</span>
@@ -165,7 +181,8 @@
     <div class="updates-section" style="margin:2em 0 1.5em 0; padding:1.2em 1em; border-radius:12px; color:#ffe082;">
         <h3 style="margin-top:0; margin-bottom:0.5em; font-size:1.1em; color:#ffe082;">What's New</h3>
         <ul style="margin:0; padding-left:1.2em; color:#ffe082; font-size:0.98em;">
-          <li>Updated 25 Jul 2025</li> 
+          <li>Updated 26 Jul 2025</li> 
+          <li>Damage history tracking.</li>
           <li>New snazzy backgroud.</li>
         </ul>
       </div>
