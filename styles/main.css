@@ -462,24 +462,24 @@ button.icon-button img {
   text-align: center;
 }
 
-/* Close button (X) */
-.close-btn {
+.popup-close {
+  all: unset; 
   position: absolute;
-  top: 0.7em;
-  right: 0.7em;
-  background: none;
-  color: #fff;
-  border: none;
-  font-size: 2em;
+  top: 8px;  /* unify with damage history */
+  right: 12px;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #aaa;
   cursor: pointer;
   line-height: 1;
-  padding: 0;
-  transition: color 0.2s;
+  transition: color 0.2s ease;
+  z-index: 20;
 }
-.close-btn:hover,
-.close-btn:focus {
-  color: #0078ff;
+
+.popup-close:hover {
+  color: #fff;
 }
+
 
 /* Instruction list */
 .landing-list {

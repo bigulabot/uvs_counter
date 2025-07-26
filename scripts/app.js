@@ -59,6 +59,42 @@ function updateHP() {
   saveState();
 }
 
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// RECORDING DMG HISTORY //
+
+
+function recordDamageEvent(player, type, value, beforeHP, afterHP) {
+  const history = JSON.parse(localStorage.getItem("damageHistory") || "[]");
+  history.push({ player, type, value, beforeHP, afterHP });
+  localStorage.setItem("damageHistory", JSON.stringify(history));
+}
+
+
+function fullReset() {
+  localStorage.removeItem("damageHistory"); // ✅ First: clear it immediately
+
+  quickReset();
+  loadDefaultHP();
+  playerHP = defaultPlayerHP;
+  rivalHP = defaultRivalHP;
+  speedCount = defaultSpeed;
+  damageCount = defaultDamage;
+  speedState = ["Off", "High", "Mid", "Low"].indexOf(defaultSpeedIcon);
+  if (speedState === -1) speedState = 0;
+  updateSpeedCounter();
+  updateDamageCounter();
+  updateHP();
+
+  // ✅ Close popup visually
+  const existingHistoryPopup = document.querySelector('#damageHistoryPopupOverlay');
+  if (existingHistoryPopup) {
+    document.body.removeChild(existingHistoryPopup);
+  }
+}
+
 
 
 // === INCREMENT DISPLAY (always fades out) ===
@@ -130,35 +166,45 @@ setupPanelButton('.rival-panel .panel-bottom', 'rival', -1);
 // === DAMAGE BUTTONS (NO SESSION, ONLY SHOW INCREMENT) ===
 fullDamageBtn.addEventListener('pointerdown', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
+  const before = playerHP;
   playerHP = Math.max(0, playerHP - dmg);
   updateHP();
   showIncrementDisplay('player', -dmg);
+  recordDamageEvent('player', 'Full', dmg, before, playerHP);
   quickReset();
 });
 
 halfDamageBtn.addEventListener('pointerdown', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   const applied = -Math.ceil(dmg / 2);
+  const before = playerHP;
   playerHP = Math.max(0, playerHP + applied);
   updateHP();
   showIncrementDisplay('player', applied);
+  recordDamageEvent('player', 'Half', Math.abs(applied), before, playerHP);
   quickReset();
 });
 
+
+
 fullDamageRivalBtn.addEventListener('pointerdown', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
+  const before = rivalHP;
   rivalHP = Math.max(0, rivalHP - dmg);
   updateHP();
   showIncrementDisplay('rival', -dmg);
+  recordDamageEvent('rival', 'Full', dmg, before, rivalHP);
   quickReset();
 });
 
 halfDamageRivalBtn.addEventListener('pointerdown', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   const applied = -Math.ceil(dmg / 2);
+  const before = rivalHP;
   rivalHP = Math.max(0, rivalHP + applied);
   updateHP();
   showIncrementDisplay('rival', applied);
+  recordDamageEvent('rival', 'Half', Math.abs(applied), before, rivalHP);
   quickReset();
 });
 
@@ -208,19 +254,7 @@ function quickReset() {
   updateSpeedCounter();
   updateDamageCounter();
 }
-function fullReset() {
-  quickReset();
-  loadDefaultHP();
-  playerHP = defaultPlayerHP;
-  rivalHP = defaultRivalHP;
-  speedCount = defaultSpeed;
-  damageCount = defaultDamage;
-  speedState = ["Off", "High", "Mid", "Low"].indexOf(defaultSpeedIcon);
-  if (speedState === -1) speedState = 0;
-  updateSpeedCounter();
-  updateDamageCounter();
-  updateHP();
-}
+
 let resetHoldTimeout = null;
 let resetTriggered = false;
 
@@ -229,10 +263,9 @@ const resetBtn = document.getElementById("resetBtn");
 function startResetHold() {
   resetTriggered = false;
   resetHoldTimeout = setTimeout(() => {
-    fullReset();
-    quickReset();
+    fullReset();              
     resetTriggered = true;
-  }, 1500); // 2 seconds for long tap
+  }, 1500);
 }
 
 function endResetHold() {
@@ -322,6 +355,12 @@ window.addEventListener('DOMContentLoaded', () => {
   const closeLandingPage = document.getElementById('closeLandingPage');
 
   landingPage.style.display = 'flex';
+
+   landingPage.addEventListener('click', (e) => {
+    if (e.target === landingPage) {
+      landingPage.style.display = 'none';
+    }
+  });
 
   closeLandingPage?.addEventListener('click', () => {
     landingPage.style.display = 'none';
@@ -493,4 +532,77 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     window.location.reload();
   });
+}
+
+function showDamageHistoryPopup() {
+  const raw = localStorage.getItem("damageHistory");
+  const history = raw ? JSON.parse(raw).reverse() : [];
+
+  const overlay = document.createElement('div');
+  overlay.id = 'damageHistoryPopupOverlay';
+  overlay.style = `
+    position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);
+    display:flex;align-items:center;justify-content:center;z-index:99999;
+  `;
+
+  const popup = document.createElement('div');
+  popup.style = `
+    background:#222529;color:white;padding:1.5em 1.5em 1em;border-radius:12px;max-height:80vh;overflow-y:auto;
+    max-width:90vw;width:320px;text-align:left;position:relative;
+  `;
+
+  // Close (X) button
+  const closeBtn = document.createElement('button');
+  closeBtn.textContent = '✕';
+  closeBtn.className = 'popup-close'; 
+  closeBtn.onclick = () => document.body.removeChild(overlay);
+  popup.appendChild(closeBtn);
+
+  // History list content
+  const list = document.createElement('ul');
+  list.style = 'list-style:none;padding:0;margin:1em 0;max-height:60vh;overflow-y:auto;';
+
+  if (history.length === 0) {
+    const item = document.createElement('li');
+    item.textContent = 'No history yet.';
+    list.appendChild(item);
+  } else {
+    history.forEach(entry => {
+      const li = document.createElement('li');
+      li.style = 'margin-bottom:0.6em;';
+
+      const playerColor = entry.player === 'player' ? '#4ac0ff' : '#ff6868';
+      const playerLabel = capitalize(entry.player);
+
+      li.innerHTML = `
+        <span style="color:${playerColor};font-weight:bold;">${playerLabel}</span>
+        ▸ <span style="font-weight:bold;">-${entry.value}</span>
+        <span style="opacity:0.8;">[${entry.type}]</span>
+        <span style="opacity:0.8;">${entry.beforeHP}→${entry.afterHP}</span>
+      `;
+
+      list.appendChild(li);
+    });
+  }
+
+  // Build popup
+  const header = document.createElement('h3');
+  header.textContent = 'Damage History';
+  header.style.marginTop = '0';
+
+  popup.appendChild(header);
+  popup.appendChild(list);
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+
+  // Close when clicking outside
+  overlay.onclick = (e) => {
+    if (e.target === overlay) {
+      document.body.removeChild(overlay);
+    }
+  };
+}
+const historyBtn = document.getElementById("historyBtn");
+if (historyBtn) {
+  historyBtn.addEventListener("click", showDamageHistoryPopup);
 }
