@@ -1,10 +1,28 @@
-const CACHE_NAME = 'uvs-stats-cache-v1.3.1'; // Increment version to force update
+const CACHE_NAME = 'uvs-stats-cache-v1.3.2'; // Increment version to force update
 const urlsToCache = [
   './',
   './index.html',
   './styles/main.css',
   './scripts/app.js',
-  './manifest.json'
+  './manifest.json',
+
+// icons & images
+
+  'icons/settings.svg',
+  'icons/history.svg',
+  'icons/button_plus.svg',
+  'icons/button_minus.svg',
+  'icons/Off.svg','icons/High.svg','icons/Mid.svg','icons/Low.svg',
+  'icons/yellow-star.svg',
+  'icons/block-reset.svg',
+  'icons/player-half.svg','icons/player-full.svg',
+  'icons/rival-full.svg','icons/rival-half.svg',
+  'icons/chevron-down.svg',
+  'icons/home-screen.svg','icons/share.svg','icons/rotate-device.svg',
+  'icons/intro_settings.svg','icons/intro-reset.svg','icons/intro_dmg1.svg','icons/intro_dmg2.svg',
+  'icons/bmc-button.svg',
+  'icons/appicon_ios.png', 'icons/appicon_android.png',
+  'icons/bg.png',
 ];
 
 self.addEventListener('install', event => {
