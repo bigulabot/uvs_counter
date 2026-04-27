@@ -656,7 +656,11 @@ button, a, .icon-button, .panel-top, .panel-bottom {
 @media (orientation: landscape) and (max-width: 1023px) {
   .main-container {
     gap: clamp(6px, 1.2vw, 18px);
-    padding: clamp(6px, 1.5vh, 14px) clamp(8px, 2vw, 20px);
+    /* max() ensures we always clear the notch/home bar in landscape */
+    padding-top: max(clamp(6px, 1.5vh, 14px), env(safe-area-inset-top));
+    padding-bottom: max(clamp(6px, 1.5vh, 14px), env(safe-area-inset-bottom));
+    padding-left: max(clamp(8px, 2vw, 20px), env(safe-area-inset-left));
+    padding-right: max(clamp(8px, 2vw, 20px), env(safe-area-inset-right));
     align-items: stretch;
     box-sizing: border-box;
   }
@@ -684,10 +688,10 @@ button, a, .icon-button, .panel-top, .panel-bottom {
   }
 
   .right-section {
-    flex: 1 1 0;
+    flex: 0 1 auto;
     width: auto;
-    min-width: clamp(180px, 28vw, 280px);
-    flex-grow: 1;
+    min-width: clamp(160px, 24vw, 240px);
+    max-width: clamp(200px, 30vw, 300px);
   }
 
   /* Bigger counter icons in landscape — vw-based since width >> height */
