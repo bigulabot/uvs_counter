@@ -9,7 +9,6 @@ html {
   /* Dark background fills notch/home-bar safe areas */
   background-color: #0d0d0d;
   height: 100%;
-  height: -webkit-fill-available;
   overflow: hidden;
 }
 
@@ -19,10 +18,8 @@ body {
   display: flex;
   width: 100%;
   height: 100%;
-  height: -webkit-fill-available;
   overflow: hidden;
   overscroll-behavior: none;
-  -webkit-overflow-scrolling: touch;
   justify-content: space-evenly;
   align-content: space-evenly;
   background-image: url('/icons/bg.png');
