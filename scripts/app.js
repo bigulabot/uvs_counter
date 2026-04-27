@@ -307,7 +307,10 @@ window.onload = function() {
   updateHP();
 }
 document.addEventListener('touchmove', function (event) {
-  if (event.touches.length > 1) { event.preventDefault(); }
+  // Prevent page scroll/bounce; allow scroll inside overflow elements (popups)
+  if (!event.target.closest('.popup-scroll-inner')) {
+    event.preventDefault();
+  }
 }, { passive: false });
 document.addEventListener('gesturestart', function (event) { event.preventDefault(); });
 let lastTouchEnd = 0;
@@ -546,6 +549,7 @@ function showDamageHistoryPopup() {
   `;
 
   const popup = document.createElement('div');
+  popup.className = 'popup-scroll-inner';
   popup.style = `
     background:#222529;color:white;padding:1.5em 1.5em 1em;border-radius:12px;max-height:80vh;overflow-y:auto;
     max-width:90vw;width:320px;text-align:left;position:relative;
