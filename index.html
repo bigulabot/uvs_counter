@@ -48,35 +48,37 @@
   <button class="minus" type="button" aria-label="Decrease damage"><img src="icons/button_minus.svg" alt="" aria-hidden="true"/></button>
 </div>
 </div>
-    <!-- RIGHT: RESET + PANELS -->
-    <div class="right-section">
-    
+    <!-- MIDDLE: ACTIONS STRIP (reset + dmg buttons) -->
+    <div class="actions-strip">
+
+      <div class="panel-actions rival-actions">
+        <button id="fullDamageRivalBtn" class="icon-button">
+          <img src="icons/rival-full.svg" alt="Rival Full Damage" />
+        </button>
+        <button id="halfDamageRivalBtn" class="icon-button">
+          <img src="icons/rival-half.svg" alt="Rival Half Damage" />
+        </button>
+      </div>
+
       <div class="reset-container">
         <button id="resetBtn">
           <img src="icons/block-reset.svg" alt="Reset" />
         </button>
-      </div>  
+      </div>
 
- <div class="panel-actions player-actions">
-      <button id="halfDamageBtn" class="icon-button">
-        <img src="icons/player-half.svg" alt="Player Half Damage" />
-      </button>    
-      <button id="fullDamageBtn" class="icon-button">
-        <img src="icons/player-full.svg" alt="Player Full Damage" />
-      </button>
-     
+      <div class="panel-actions player-actions">
+        <button id="halfDamageBtn" class="icon-button">
+          <img src="icons/player-half.svg" alt="Player Half Damage" />
+        </button>
+        <button id="fullDamageBtn" class="icon-button">
+          <img src="icons/player-full.svg" alt="Player Full Damage" />
+        </button>
+      </div>
+
     </div>
 
-   <div class="panel-actions rival-actions">
-      <button id="fullDamageRivalBtn" class="icon-button">
-        <img src="icons/rival-full.svg" alt="Rival Full Damage" />
-      </button>
-      <button id="halfDamageRivalBtn" class="icon-button">
-        <img src="icons/rival-half.svg" alt="Rival Half Damage" />
-      </button>
-    </div>
-
-
+    <!-- RIGHT: HP PANELS -->
+    <div class="right-section">
 
       <!-- PANELS -->
    <div class="hp-panels">
@@ -174,18 +176,42 @@
       </div>
           </div>
     <div class="feedback-link">
-      <a href="https://forms.gle/AMwFuPB12adRHYkj7" style="color: #fff; text-decoration: underline; font-size: 1.1em;">
+      <a href="mailto:bigulabot@gmail.com?subject=UVS%20Counter%20Feedback" style="color: #fff; text-decoration: underline; font-size: 1.1em;">
         Click here to give feedback
       </a>
     </div>
     <div class="updates-section" style="margin:2em 0 1.5em 0; padding:1.2em 1em; border-radius:12px; color:#ffe082;">
         <h3 style="margin-top:0; margin-bottom:0.5em; font-size:1.1em; color:#ffe082;">What's New</h3>
+       
         <ul style="margin:0; padding-left:1.2em; color:#ffe082; font-size:0.98em;">
-          <li>Updated 26 Jul 2025</li> 
-          <li>Damage history tracking.</li>
-          <li>New snazzy backgroud.</li>
+             
+    <!-- Most recent update FIRST -->
+
+          <li style="list-style-type:none; margin-left:-1em; margin-bottom:1em;">
+              Updated 27 Apr 2026:
+            <ul style="margin:0.4em 0 0 1.2em; font-size:0.95em;">
+              <li>Redesigned responsive layout for mobile, tablet and desktop.</li>
+            </ul>
+          </li>
+
+          <li style="list-style-type:none; margin-left:-1em; margin-bottom:1em;">
+              Updated 1 Sep 2025:
+            <ul style="margin:0.4em 0 0 1.2em; font-size:0.95em;">
+              <li>Better offline functionality.</li>
+            </ul>
+          </li>
+
+          <li style="list-style-type:none; margin-left:-1em; margin-bottom:1em;">
+              Updated 26 Jul 2025:
+            <ul style="margin:0.4em 0 0 1.2em; font-size:0.95em;">
+              <li>Damage history tracking.</li>
+              <li>New snazzy background.</li>
+            </ul>
+          </li>
+
         </ul>
       </div>
+
     <div class="support-section">
         <a href="https://coff.ee/bigula" target="_blank" style="color: #fff; text-decoration: underline; font-size: 1em;">
           Want to support the app?
