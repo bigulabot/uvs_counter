@@ -689,23 +689,23 @@ button, a, .icon-button, .panel-top, .panel-bottom {
     flex-grow: 1;
   }
 
-  /* Bigger counter icons in landscape — fill the available height, but cap by width so panels fit */
+  /* Bigger counter icons in landscape — vw-based since width >> height */
   .speed-counter,
   .damage-counter {
-    width: min(80vh, 24vw, 280px);
-    height: min(80vh, 24vw, 280px);
-    min-width: 140px;
-    min-height: 140px;
+    width: clamp(120px, 20vw, 200px);
+    height: clamp(120px, 20vw, 200px);
+    min-width: 0;
+    min-height: 0;
   }
 
   .speed-counter .counter-value,
   .damage-counter .counter-value {
-    font-size: min(26vh, 8vw, 100px);
+    font-size: clamp(36px, 6.5vw, 70px);
   }
 
   button.plus, button.minus {
-    width: clamp(54px, 12vh, 80px);
-    height: clamp(34px, 7vh, 50px);
+    width: clamp(50px, 9vw, 76px);
+    height: clamp(30px, 5vw, 52px);
   }
 
   .score {
@@ -713,8 +713,8 @@ button, a, .icon-button, .panel-top, .panel-bottom {
   }
 
   .reset-container img {
-    width: clamp(56px, 14vh, 88px);
-    height: clamp(56px, 14vh, 88px);
+    width: clamp(52px, 8vw, 76px);
+    height: clamp(52px, 8vw, 76px);
   }
 
   .actions-strip .panel-actions {
@@ -722,7 +722,7 @@ button, a, .icon-button, .panel-top, .panel-bottom {
   }
 
   button.icon-button img {
-    width: clamp(46px, 12vh, 76px);
+    width: clamp(42px, 7vw, 68px);
   }
 
   .hp-panels {
